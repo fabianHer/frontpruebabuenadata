@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col md-6 mt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Fecha Nacimento</th>
+                  <th scope="col">Identificación</th>
+                  <th scope="col">Eliminar</th>
+                  <th scope="col">Editar</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let listaUsuario of listaUsuarios; let i = index">   
+                  <td>{{i + 1}}</td>              
+                  <td>{{listaUsuario.nombre }}</td>
+                  <td>{{listaUsuario.fechaNacimiento | date :'dd-MM-yyyy' }}</td>
+                  <td>{{listaUsuario.identificacion}}</td>
+                  <td><i class="bi bi-trash" (click)="eliminarUsuario(listaUsuario.id)"></i></td>
+                  <td><i class="bi bi-pen" (click)="consultarUsuario(listaUsuario.id)"></i></td>
+                </tr>
+                
+              </tbody>
+        </table>
+          <button *ngIf="!verFormulario" class="btn btn-primary" type="button" (click)="verOcultarFormulario()">Registrar</button>
+          <button *ngIf="verFormulario" class="btn btn-primary" type="button" (click)="verOcultarFormulario()">Ocultar formulario</button>       
+    </div>
+    <div class="col md-6 mt-3" *ngIf="verFormulario">
+        <form [formGroup]="formularioEnvio" (ngSubmit)="agregarUsuario()">
+            <div class="row">
+                <div class="col-md-12 mb-3 form-group">
+                    <label>Nombre </label>
+                    <input class="form-control" type="text" formControlName="nombre">
+                    <small *ngIf="getNombre.invalid  && getNombre.touched" class="text-danger animated fadeIn">Campo requerido</small>
+                </div>
+                <div class="col-md-12 mb-3 form-group">
+                    <label>Fecha nacimiento </label>
+                    <input class="form-control" type="date" formControlName="fechaNacimiento">
+                    <small *ngIf="getFechaNacimiento.invalid  && getFechaNacimiento.touched" class="text-danger animated fadeIn">Campo requerido</small>
+                </div>
+                <div class="col-md-12 mb-3 form-group">
+                    <label>Identificación</label>
+                    <input class="form-control" type="text" formControlName="identificacion">
+                    <small *ngIf="getIdentificacion.invalid  && getIdentificacion.touched" class="text-danger animated fadeIn">Campo requerido</small>
+
+                </div>
+                <div class="col-md-3 mb-3 form-group">
+                <button type="submit" class="btn btn-primary">Enviar datos</button>
+                </div> 
+            </div>
+        </form>
+    </div>
+</div>
